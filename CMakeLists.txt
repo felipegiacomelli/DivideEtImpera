@@ -41,7 +41,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 project(DivideEtImpera)
 set(VERSION_MAJOR "0")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "0")
+set(VERSION_PATCH "1")
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX "$ENV{HOME}/Libraries/dei-${VERSION}/${BUILD_TYPE}/${LIBRARY_TYPE}" CACHE PATH "Install location" FORCE)
@@ -157,15 +157,16 @@ enable_testing()
 
 add_subdirectory(MetisInterface)
 add_subdirectory(MetisInterfaceTest)
-add_test(NAME MetisInterfaceTest COMMAND mpirun -np 2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/MetisInterfaceTest)
+add_test(NAME "MetisInterfaceTest" COMMAND mpirun -np 2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/MetisInterfaceTest)
 
 add_subdirectory(DomainDivider)
 add_subdirectory(DomainDividerTest)
-add_test(NAME DomainDividerTest COMMAND mpirun -np 2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/DomainDividerTest)
+add_test(NAME "DomainDividerTest1" COMMAND mpirun -np 1 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/DomainDividerTest)
+add_test(NAME "DomainDividerTest2" COMMAND mpirun -np 2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/DomainDividerTest)
 
 add_subdirectory(ParallelCgnsInterface)
 add_subdirectory(ParallelCgnsInterfaceTest)
-add_test(NAME ParallelCgnsInterfaceTest COMMAND mpirun -np 2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/ParallelCgnsInterfaceTest)
+add_test(NAME "ParallelCgnsInterfaceTest" COMMAND mpirun -np 2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/ParallelCgnsInterfaceTest)
 
 add_subdirectory(Divider)
 

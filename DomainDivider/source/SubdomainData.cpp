@@ -6,6 +6,6 @@ SubdomainData::SubdomainData(GridDataPtr localGridData, std::vector<int> globalI
         this->ownershipRange = std::make_pair(this->globalIndices[0], this->globalIndices[this->localGridData->numberOfLocalVertices - 1]);
     }
     else {
-        this->ownershipRange = std::make_pair(0, this->localGridData->numberOfLocalVertices);
+        this->ownershipRange = std::make_pair(0, this->localGridData->numberOfLocalVertices - 1);
     }
 }

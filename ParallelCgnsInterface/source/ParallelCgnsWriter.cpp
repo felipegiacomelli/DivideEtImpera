@@ -88,7 +88,7 @@ void ParallelCgnsWriter::writeField(std::string name, const std::vector<double>&
     this->writeField();
 
     if (cgp_field_write_data(this->fileIndex, this->baseIndex, this->zoneIndex, this->solutionIndex, this->fieldIndex, &this->begin, &this->end, &values[0]))
-        throw std::runtime_error(std::string(__PRETTY_FUNCTION__) + " - Could not write field " + name + " data");
+        throw std::runtime_error(error(__PRETTY_FUNCTION__, "Could not write field " + name + " data", cg_get_error()));
 }
 
 void ParallelCgnsWriter::writeField(std::string name, const std::vector<int>& values) {

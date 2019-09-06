@@ -18,7 +18,7 @@ struct ParallelCgnsWriterFixture : public DomainDividerFixture {
 
     ~ParallelCgnsWriterFixture() {
         if (this->world.rank() == 0)
-            boost::filesystem::remove_all(this->output);
+            boost::filesystem::remove_all(boost::filesystem::path(this->output).parent_path());
     }
 
     std::string output;

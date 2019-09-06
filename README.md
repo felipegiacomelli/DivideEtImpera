@@ -1,6 +1,7 @@
 # DivideEtImpera
 
 Master: [![Build status](https://ci.appveyor.com/api/projects/status/rp4bq7t4lad73530/branch/master?svg=true)](https://ci.appveyor.com/project/felipegiacomelli/divideetimpera/branch/master)
+Develop: [![Build status](https://ci.appveyor.com/api/projects/status/rp4bq7t4lad73530/branch/develop?svg=true)](https://ci.appveyor.com/project/felipegiacomelli/divideetimpera/branch/develop)
 
 # Divide
 
