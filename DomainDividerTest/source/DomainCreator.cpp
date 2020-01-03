@@ -28,11 +28,15 @@ TestCase(DomainCreatorCase) {
 
             CgnsReader cgnsReader(domainCreator.getFileName());
 
-            checkEqual(cgnsReader.gridData->triangles.size(), this->gridData->triangles.size());
-            checkEqual(cgnsReader.gridData->quadrangles.size(), this->gridData->quadrangles.size());
-            checkEqual(cgnsReader.gridData->lines.size(), this->gridData->lines.size());
-            checkEqual(cgnsReader.gridData->regions.size(), this->gridData->regions.size());
-            checkEqual(cgnsReader.gridData->boundaries.size(), this->gridData->boundaries.size());
+            // checkEqual(cgnsReader.gridData->triangles.size(), this->gridData->triangles.size());
+            // checkEqual(cgnsReader.gridData->quadrangles.size(), this->gridData->quadrangles.size());
+            // checkEqual(cgnsReader.gridData->lines.size(), this->gridData->lines.size());
+            // checkEqual(cgnsReader.gridData->regions.size(), this->gridData->regions.size());
+            // checkEqual(cgnsReader.gridData->boundaries.size(), this->gridData->boundaries.size());
+
+            checkEqual(cgnsReader.gridData->coordinates.size(), this->gridData->coordinates.size());
+            checkEqual(cgnsReader.gridData->connectivities.size(), this->gridData->connectivities.size());
+            checkEqual(cgnsReader.gridData->entities.size(), this->gridData->entities.size());
 
             auto coordinates = cgnsReader.gridData->coordinates;
             checkEqual(coordinates.size(), this->gridData->coordinates.size());

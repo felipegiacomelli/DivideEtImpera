@@ -2,7 +2,7 @@
 
 LIBRARY="mshtocgns-2.0.0"
 BUILD_TYPE=`echo ${BUILD_TYPE,,}`
-FLAGS="-DSKIP_MSH=ON -DBUILD_SHARED_LIBS=TRUE -DCMAKE_BUILD_TYPE=$BUILD_TYPE"
+FLAGS="-DENABLE_MSH=OFF -DBUILD_SHARED_LIBS=TRUE -DCMAKE_BUILD_TYPE=$BUILD_TYPE"
 
 if [ ! -d "$LIBRARY" ]; then
     git clone -b master "https://github.com/felipegiacomelli/MSHtoCGNS.git"

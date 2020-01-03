@@ -30,21 +30,22 @@ void DomainDivider::setupBuild(DomainPartitioner domainPartitioner) {
     this->addLocalVertices();
     this->setSubdomainShiftsAndSizes();
     this->defineQuantities();
-    this->buildGlobalConnectivities();
     this->findSubdomainsOfElements();
     this->findGhostVertices();
 }
 
 void DomainDivider::defineQuantities() {
+    const auto& cs = this->gridData->connectivities;
+
     if (this->gridData->dimension == 2) {
-        this->numberOfElements = this->gridData->triangles.size() + this->gridData->quadrangles.size();
-        this->numberOfFacets = this->gridData->lines.size();
+        this->numberOfElements = std::count_if(cs.begin(), cs.cend(), [](const auto& c){return c[0] == TRI_3 || c[0] == QUAD_4;});
+        this->numberOfFacets = std::count_if(cs.begin(), cs.cend(), [](const auto& c){return c[0] == BAR_2;});
         this->numberOfWellElements = 0;
     }
     else  {
-        this->numberOfElements = this->gridData->tetrahedrons.size() + this->gridData->hexahedrons.size() + this->gridData->prisms.size() + this->gridData->pyramids.size();
-        this->numberOfFacets = this->gridData->triangles.size() + this->gridData->quadrangles.size();
-        this->numberOfWellElements = this->gridData->lines.size();
+        this->numberOfElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == TETRA_4 || c[0] == HEXA_8 || c[0] == PENTA_6 || c[0] == PYRA_5;});
+        this->numberOfFacets = std::count_if(cs.begin(), cs.cend(), [](const auto& c){return c[0] == TRI_3 || c[0] == QUAD_4;});
+        this->numberOfWellElements = std::count_if(cs.begin(), cs.cend(), [](const auto& c){return c[0] == BAR_2;});
     }
 }
 
@@ -67,37 +68,17 @@ void DomainDivider::setSubdomainShiftsAndSizes() {
     }
 }
 
-void DomainDivider::buildGlobalConnectivities() {
-    this->globalConnectivities.reserve(this->numberOfElements + this->numberOfFacets + this->numberOfWellElements);
-
-    append(TETRA_4, this->gridData->tetrahedrons, this->globalConnectivities);
-    append(HEXA_8, this->gridData->hexahedrons, this->globalConnectivities);
-    append(PENTA_6, this->gridData->prisms, this->globalConnectivities);
-    append(PYRA_5, this->gridData->pyramids, this->globalConnectivities);
-    append(TRI_3, this->gridData->triangles, this->globalConnectivities);
-    append(QUAD_4, this->gridData->quadrangles, this->globalConnectivities);
-    append(BAR_2, this->gridData->lines, this->globalConnectivities);
-
-    std::sort(this->globalConnectivities.begin(), this->globalConnectivities.end(), [](const auto& a, const auto& b){return a.back() < b.back();});
-}
-
 void DomainDivider::findSubdomainsOfElements() {
     this->subdomainsOfElements.resize(this->numberOfElements + this->numberOfFacets + this->numberOfWellElements);
     this->elementsLocalIndices.resize(this->numberOfElements + this->numberOfFacets + this->numberOfWellElements, std::vector<int>(this->world.size(), -1));
     this->elementsOfSubdomains.resize(this->world.size());
 
-    for (auto region : this->gridData->regions)
-        this->addSubdomainsOfElements(region.begin, region.end);
-
-    for (auto boundary : this->gridData->boundaries)
-        this->addSubdomainsOfElements(boundary.begin, boundary.end);
-
-    for (auto well : this->gridData->wells)
-        this->addSubdomainsOfElements(well.begin, well.end);
+    for (auto entity : this->gridData->entities)
+        this->addSubdomainsOfElements(entity.begin, entity.end);
 }
 
 void DomainDivider::addSubdomainsOfElements(int begin, int end) {
-    for (auto position = this->globalConnectivities.cbegin() + begin; position != this->globalConnectivities.cbegin() + end; ++position) {
+    for (auto position = this->gridData->connectivities.cbegin() + begin; position != this->gridData->connectivities.cbegin() + end; ++position) {
         int originalIndex = position->back();
         for (auto vertex = position->cbegin() + 1; vertex != position->cend() - 1; ++vertex) {
             int subdomain = this->subdomains[*vertex];
@@ -110,15 +91,17 @@ void DomainDivider::addSubdomainsOfElements(int begin, int end) {
 }
 
 void DomainDivider::findGhostVertices() {
-    for (auto region : this->gridData->regions) {
-        for (auto position = this->globalConnectivities.cbegin() + region.begin; position != this->globalConnectivities.cbegin() + region.end; ++position) {
-            for (auto vertex = position->cbegin() + 1; vertex != position->cend() - 1; ++vertex) {
-                for (int subdomain : this->subdomainsOfElements[position->back()]) {
-                    if (this->subdomains[*vertex] != subdomain) {
-                        if (std::none_of(this->verticesLocalIndices[*vertex].cbegin(), this->verticesLocalIndices[*vertex].cend(), [=](auto s){return s.first == subdomain;})) {
-                            std::pair<int, int> localHandle{subdomain, this->verticesOfSubdomains[subdomain].size()};
-                            this->verticesLocalIndices[*vertex].emplace_back(localHandle);
-                            this->verticesOfSubdomains[subdomain].emplace_back(*vertex);
+    for (auto entity : this->gridData->entities) {
+        if (entity.dimension == this->gridData->dimension) {
+            for (auto position = this->gridData->connectivities.cbegin() + entity.begin; position != this->gridData->connectivities.cbegin() + entity.end; ++position) {
+                for (auto vertex = position->cbegin() + 1; vertex != position->cend() - 1; ++vertex) {
+                    for (int subdomain : this->subdomainsOfElements[position->back()]) {
+                        if (this->subdomains[*vertex] != subdomain) {
+                            if (std::none_of(this->verticesLocalIndices[*vertex].cbegin(), this->verticesLocalIndices[*vertex].cend(), [=](auto s){return s.first == subdomain;})) {
+                                std::pair<int, int> localHandle{subdomain, this->verticesOfSubdomains[subdomain].size()};
+                                this->verticesLocalIndices[*vertex].emplace_back(localHandle);
+                                this->verticesOfSubdomains[subdomain].emplace_back(*vertex);
+                            }
                         }
                     }
                 }

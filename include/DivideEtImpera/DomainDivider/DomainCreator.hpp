@@ -18,13 +18,6 @@ class DomainCreator {
         void setOldToNew();
         void reorderCoordinates();
         void rectifyConnectivities();
-
-        template<typename T> void rectifyConnectivity(std::vector<T>& connectivities) {
-            for (auto& connectivity : connectivities)
-                for (auto index = connectivity.begin(); index != connectivity.end() - 1; ++index)
-                    *index = this->oldToNew[*index];
-        }
-
         void createOutputFile();
 
         boost::shared_ptr<GridData> gridData;

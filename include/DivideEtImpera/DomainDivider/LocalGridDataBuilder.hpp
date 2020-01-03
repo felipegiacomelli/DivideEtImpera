@@ -21,18 +21,8 @@ class LocalGridDataBuilder {
         void addVertices(int rank, GridData& localGridData);
         void setOriginalToLocal(int rank);
         void addElements(int rank, GridData& localGridData);
-
-        template<typename T> void addElement(int rank, const std::vector<int>& connectivity, std::vector<T>& connectivities) {
-            auto& element = connectivities.emplace_back();
-            for (auto vertex = 1u; vertex < connectivity.size() - 1; ++vertex) {
-                element[vertex - 1] = this->originalToLocal[connectivity[vertex]];
-            }
-            element.back() = this->domainDivider->elementsLocalIndices[connectivity.back()][rank];
-        }
-
-        void buildLocalConnectivities(int rank, const GridData& localGridData);
         void addEntities(int rank, const std::vector<EntityData>& originals, std::vector<EntityData>& locals);
-        void findVertices(std::vector<EntityData>& entities);
+        void findVertices(std::vector<EntityData>& entities, GridData& gridData);
 
         DomainDivider* domainDivider;
 

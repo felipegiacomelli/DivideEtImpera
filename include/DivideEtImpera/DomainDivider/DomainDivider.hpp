@@ -28,7 +28,6 @@ class DomainDivider {
         void addLocalVertices();
         void setSubdomainShiftsAndSizes();
 
-        void buildGlobalConnectivities();
         void findSubdomainsOfElements();
         void addSubdomainsOfElements(int begin, int end);
 

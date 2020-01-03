@@ -168,8 +168,6 @@ add_subdirectory(ParallelCgnsInterface)
 add_subdirectory(ParallelCgnsInterfaceTest)
 add_test(NAME "ParallelCgnsInterfaceTest" COMMAND mpirun -np 2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/ParallelCgnsInterfaceTest)
 
-add_subdirectory(Divider)
-
 ##################################################################
 # INSTALLATION
 ##################################################################

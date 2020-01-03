@@ -27,11 +27,12 @@ TestCase(SubdomainCreatorCase) {
             SubdomainCreator subdomainCreator(this->subdomainData->localGridData, this->output);
             CgnsReader cgnsReader(subdomainCreator.getFileName());
 
-            checkEqual(cgnsReader.gridData->tetrahedrons.size(), 4u);
-            checkEqual(cgnsReader.gridData->prisms.size(), 2u);
-            checkEqual(cgnsReader.gridData->triangles.size(), 8u);
-            checkEqual(cgnsReader.gridData->quadrangles.size(), 4u);
-            checkEqual(cgnsReader.gridData->lines.size(), 1u);
+            // checkEqual(cgnsReader.gridData->tetrahedrons.size(), 4u);
+            // checkEqual(cgnsReader.gridData->prisms.size(), 2u);
+            // checkEqual(cgnsReader.gridData->triangles.size(), 8u);
+            // checkEqual(cgnsReader.gridData->quadrangles.size(), 4u);
+            // checkEqual(cgnsReader.gridData->lines.size(), 1u);
+            checkEqual(cgnsReader.gridData->connectivities.size(), 19u);
 
             auto coordinates = cgnsReader.gridData->coordinates;
             checkEqual(coordinates.size(), 15u);
@@ -55,8 +56,9 @@ TestCase(SubdomainCreatorCase) {
             SubdomainCreator subdomainCreator(this->subdomainData->localGridData, this->output);
             CgnsReader cgnsReader(subdomainCreator.getFileName());
 
-            checkEqual(cgnsReader.gridData->tetrahedrons.size(), 10u);
-            checkEqual(cgnsReader.gridData->triangles.size(), 14u);
+            // checkEqual(cgnsReader.gridData->tetrahedrons.size(), 10u);
+            // checkEqual(cgnsReader.gridData->triangles.size(), 14u);
+            checkEqual(cgnsReader.gridData->connectivities.size(), 24u);
 
             auto coordinates = cgnsReader.gridData->coordinates;
             checkEqual(cgnsReader.gridData->coordinates.size(), 14u);
