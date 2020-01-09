@@ -1,6 +1,7 @@
 #include <MSHtoCGNS/BoostInterface/Test.hpp>
 #include "DivideEtImpera/UnitTest/GridDataFixture.hpp"
 #include "DivideEtImpera/DomainDivider/DomainDivider.hpp"
+#include <cgnslib.h>
 
 #define TOLERANCE 1.0e-12
 
@@ -210,11 +211,19 @@ TestCase(LocalGridDataCase) {
 
             checkEqual(localGridData->coordinates.size(), 13u);
 
-            // checkEqual(localGridData->tetrahedrons.size(), 20u);
-            // checkEqual(localGridData->triangles.size(), 18u);
+            {
+                auto connectivities = localGridData->connectivities;
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == TETRA_4;}), 20);
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == TRI_3  ;}), 18);
+                checkEqual(connectivities.size(), 38u);
+            }
 
-            // checkEqual(localGridData->regions.size(), 1u);
-            // checkEqual(localGridData->boundaries.size(), 6u);
+            {
+                auto entities = localGridData->entities;
+                checkEqual(entities.size(), 7u);
+                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 3;}), 1);
+                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 2;}), 6);
+            }
         }
         else {
             DomainDivider domainDivider;
@@ -240,11 +249,19 @@ TestCase(LocalGridDataCase) {
 
             checkEqual(localGridData->coordinates.size(), 13u);
 
-            // checkEqual(localGridData->tetrahedrons.size(), 20u);
-            // checkEqual(localGridData->triangles.size(), 18u);
+            {
+                auto connectivities = localGridData->connectivities;
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == TETRA_4;}), 20);
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == TRI_3  ;}), 18);
+                checkEqual(connectivities.size(), 38u);
+            }
 
-            // checkEqual(localGridData->regions.size(), 1u);
-            // checkEqual(localGridData->boundaries.size(), 6u);
+            {
+                auto entities = localGridData->entities;
+                checkEqual(entities.size(), 7u);
+                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 3;}), 1);
+                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 2;}), 6);
+            }
         }
     }
 }
