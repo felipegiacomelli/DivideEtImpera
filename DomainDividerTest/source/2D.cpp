@@ -151,60 +151,60 @@ TestCase(LocalGridDataCase) {
             }
 
             {
-                auto entities = localGridData->entities;
-                checkEqual(entities.size(), 5u);
+                auto sections = localGridData->sections;
+                checkEqual(sections.size(), 5u);
 
-                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 2;}), 2);
-                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 1;}), 3);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 2;}), 2);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 1;}), 3);
 
                 {
-                    auto entity = entities[0];
-                    checkEqual(entity.name, std::string("A"));
-                    checkEqual(entity.dimension, 2);
-                    checkEqual(entity.begin, 0);
-                    checkEqual(entity.end, 2);
+                    auto section = sections[0];
+                    checkEqual(section.name, std::string("A"));
+                    checkEqual(section.dimension, 2);
+                    checkEqual(section.begin, 0);
+                    checkEqual(section.end, 2);
                     std::vector<int> expected{0, 1, 2, 3};
-                    checkEqualCollections(entity.vertices.cbegin(), entity.vertices.cend(), expected.cbegin(), expected.cend());
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
                 }
 
                 {
-                    auto entity = entities[1];
-                    checkEqual(entity.name, std::string("B"));
-                    checkEqual(entity.dimension, 2);
-                    checkEqual(entity.begin, 2);
-                    checkEqual(entity.end, 4);
+                    auto section = sections[1];
+                    checkEqual(section.name, std::string("B"));
+                    checkEqual(section.dimension, 2);
+                    checkEqual(section.begin, 2);
+                    checkEqual(section.end, 4);
                     std::vector<int> expected{2, 3, 4, 5};
-                    checkEqualCollections(entity.vertices.cbegin(), entity.vertices.cend(), expected.cbegin(), expected.cend());
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
                 }
 
                 {
-                    auto entity = entities[2];
-                    checkEqual(entity.name, std::string("SOUTH"));
-                    checkEqual(entity.dimension, 1);
-                    checkEqual(entity.begin, 4);
-                    checkEqual(entity.end, 5);
+                    auto section = sections[2];
+                    checkEqual(section.name, std::string("SOUTH"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 4);
+                    checkEqual(section.end, 5);
                     std::vector<int> expected{0, 3};
-                    checkEqualCollections(entity.vertices.cbegin(), entity.vertices.cend(), expected.cbegin(), expected.cend());
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
                 }
 
                 {
-                    auto entity = entities[3];
-                    checkEqual(entity.name, std::string("NORTH"));
-                    checkEqual(entity.dimension, 1);
-                    checkEqual(entity.begin, 5);
-                    checkEqual(entity.end, 7);
+                    auto section = sections[3];
+                    checkEqual(section.name, std::string("NORTH"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 5);
+                    checkEqual(section.end, 7);
                     std::vector<int> expected{1, 2, 5};
-                    checkEqualCollections(entity.vertices.cbegin(), entity.vertices.cend(), expected.cbegin(), expected.cend());
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
                 }
 
                 {
-                    auto entity = entities[4];
-                    checkEqual(entity.name, std::string("WEST"));
-                    checkEqual(entity.dimension, 1);
-                    checkEqual(entity.begin, 7);
-                    checkEqual(entity.end, 8);
+                    auto section = sections[4];
+                    checkEqual(section.name, std::string("WEST"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 7);
+                    checkEqual(section.end, 8);
                     std::vector<int> expected{0, 1};
-                    checkEqualCollections(entity.vertices.cbegin(), entity.vertices.cend(), expected.cbegin(), expected.cend());
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
                 }
             }
         }
@@ -252,60 +252,60 @@ TestCase(LocalGridDataCase) {
 
 
             {
-                auto entities = localGridData->entities;
-                checkEqual(entities.size(), 5u);
+                auto sections = localGridData->sections;
+                checkEqual(sections.size(), 5u);
 
-                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 2;}), 2);
-                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 1;}), 3);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 2;}), 2);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 1;}), 3);
 
                 {
-                    auto entity = entities[0];
-                    checkEqual(entity.name, std::string("A"));
-                    checkEqual(entity.dimension, 2);
-                    checkEqual(entity.begin, 0);
-                    checkEqual(entity.end, 1);
+                    auto section = sections[0];
+                    checkEqual(section.name, std::string("A"));
+                    checkEqual(section.dimension, 2);
+                    checkEqual(section.begin, 0);
+                    checkEqual(section.end, 1);
                     std::vector<int> expected{0, 3, 4};
-                    checkEqualCollections(entity.vertices.cbegin(), entity.vertices.cend(), expected.cbegin(), expected.cend());
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
                 }
 
                 {
-                    auto entity = entities[1];
-                    checkEqual(entity.name, std::string("B"));
-                    checkEqual(entity.dimension, 2);
-                    checkEqual(entity.begin, 1);
-                    checkEqual(entity.end, 3);
+                    auto section = sections[1];
+                    checkEqual(section.name, std::string("B"));
+                    checkEqual(section.dimension, 2);
+                    checkEqual(section.begin, 1);
+                    checkEqual(section.end, 3);
                     std::vector<int> expected{0, 1, 2, 4};
-                    checkEqualCollections(entity.vertices.cbegin(), entity.vertices.cend(), expected.cbegin(), expected.cend());
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
                 }
 
                 {
-                    auto entity = entities[2];
-                    checkEqual(entity.name, std::string("SOUTH"));
-                    checkEqual(entity.dimension, 1);
-                    checkEqual(entity.begin, 3);
-                    checkEqual(entity.end, 5);
+                    auto section = sections[2];
+                    checkEqual(section.name, std::string("SOUTH"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 3);
+                    checkEqual(section.end, 5);
                     std::vector<int> expected{0, 2, 3};
-                    checkEqualCollections(entity.vertices.cbegin(), entity.vertices.cend(), expected.cbegin(), expected.cend());
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
                 }
 
                 {
-                    auto entity = entities[3];
-                    checkEqual(entity.name, std::string("EAST"));
-                    checkEqual(entity.dimension, 1);
-                    checkEqual(entity.begin, 5);
-                    checkEqual(entity.end, 6);
+                    auto section = sections[3];
+                    checkEqual(section.name, std::string("EAST"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 5);
+                    checkEqual(section.end, 6);
                     std::vector<int> expected{1, 2};
-                    checkEqualCollections(entity.vertices.cbegin(), entity.vertices.cend(), expected.cbegin(), expected.cend());
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
                 }
 
                 {
-                    auto entity = entities[4];
-                    checkEqual(entity.name, std::string("NORTH"));
-                    checkEqual(entity.dimension, 1);
-                    checkEqual(entity.begin, 6);
-                    checkEqual(entity.end, 7);
+                    auto section = sections[4];
+                    checkEqual(section.name, std::string("NORTH"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 6);
+                    checkEqual(section.end, 7);
                     std::vector<int> expected{1, 4};
-                    checkEqualCollections(entity.vertices.cbegin(), entity.vertices.cend(), expected.cbegin(), expected.cend());
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
                 }
             }
         }

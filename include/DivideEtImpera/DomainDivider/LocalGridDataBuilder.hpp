@@ -21,8 +21,8 @@ class LocalGridDataBuilder {
         void addVertices(int rank, GridData& localGridData);
         void setOriginalToLocal(int rank);
         void addElements(int rank, GridData& localGridData);
-        void addEntities(int rank, const std::vector<EntityData>& originals, std::vector<EntityData>& locals);
-        void findVertices(std::vector<EntityData>& entities, GridData& gridData);
+        void addEntities(int rank, const std::vector<SectionData>& originals, std::vector<SectionData>& locals);
+        void findVertices(std::vector<SectionData>& sections, GridData& gridData);
 
         DomainDivider* domainDivider;
 

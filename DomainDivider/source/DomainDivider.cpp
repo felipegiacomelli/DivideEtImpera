@@ -73,8 +73,8 @@ void DomainDivider::findSubdomainsOfElements() {
     this->elementsLocalIndices.resize(this->numberOfElements + this->numberOfFacets + this->numberOfWellElements, std::vector<int>(this->world.size(), -1));
     this->elementsOfSubdomains.resize(this->world.size());
 
-    for (auto entity : this->gridData->entities)
-        this->addSubdomainsOfElements(entity.begin, entity.end);
+    for (auto section : this->gridData->sections)
+        this->addSubdomainsOfElements(section.begin, section.end);
 }
 
 void DomainDivider::addSubdomainsOfElements(int begin, int end) {
@@ -91,9 +91,9 @@ void DomainDivider::addSubdomainsOfElements(int begin, int end) {
 }
 
 void DomainDivider::findGhostVertices() {
-    for (auto entity : this->gridData->entities) {
-        if (entity.dimension == this->gridData->dimension) {
-            for (auto position = this->gridData->connectivities.cbegin() + entity.begin; position != this->gridData->connectivities.cbegin() + entity.end; ++position) {
+    for (auto section : this->gridData->sections) {
+        if (section.dimension == this->gridData->dimension) {
+            for (auto position = this->gridData->connectivities.cbegin() + section.begin; position != this->gridData->connectivities.cbegin() + section.end; ++position) {
                 for (auto vertex = position->cbegin() + 1; vertex != position->cend() - 1; ++vertex) {
                     for (int subdomain : this->subdomainsOfElements[position->back()]) {
                         if (this->subdomains[*vertex] != subdomain) {

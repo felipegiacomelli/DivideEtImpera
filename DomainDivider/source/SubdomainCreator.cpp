@@ -7,7 +7,7 @@ SubdomainCreator::SubdomainCreator(GridDataPtr localGridData, std::string output
         this->removeGhostElements();
     }
     this->defineQuantities();
-    this->gridData->entities.clear();
+    this->gridData->sections.clear();
     this->createRegion();
     this->createBoundary();
     this->createWell();
@@ -46,14 +46,14 @@ void SubdomainCreator::defineQuantities() {
 void SubdomainCreator::createRegion() {
     this->begin = 0;
     this->end = this->numberOfElements;
-    this->gridData->entities.emplace_back(EntityData{"REGION", this->gridData->dimension, this->begin, this->end, std::vector<int>{}});
+    this->gridData->sections.emplace_back(SectionData{"REGION", this->gridData->dimension, this->begin, this->end, std::vector<int>{}});
 }
 
 void SubdomainCreator::createBoundary() {
     this->begin += this->numberOfElements;
     this->end += this->numberOfFacets;
     if (this->numberOfFacets > 0) {
-        this->gridData->entities.emplace_back(EntityData{"BOUNDARY", this->gridData->dimension - 1, this->begin, this->end, std::vector<int>{}});
+        this->gridData->sections.emplace_back(SectionData{"BOUNDARY", this->gridData->dimension - 1, this->begin, this->end, std::vector<int>{}});
     }
 }
 
@@ -61,7 +61,7 @@ void SubdomainCreator::createWell() {
     this->begin += this->numberOfFacets;
     this->end += this->numberOfWellElements;
     if (this->numberOfWellElements > 0) {
-        this->gridData->entities.emplace_back(EntityData{"WELL", 1, this->begin, this->end, std::vector<int>{}});
+        this->gridData->sections.emplace_back(SectionData{"WELL", 1, this->begin, this->end, std::vector<int>{}});
     }
 }
 

@@ -12,8 +12,8 @@ GridData LocalGridDataBuilder::buildLocalGridData(int rank) {
     this->addVertices(rank, localGridData);
     this->setOriginalToLocal(rank);
     this->addElements(rank, localGridData);
-    this->addEntities(rank, this->domainDivider->gridData->entities, localGridData.entities);
-    this->findVertices(localGridData.entities, localGridData);
+    this->addEntities(rank, this->domainDivider->gridData->sections, localGridData.sections);
+    this->findVertices(localGridData.sections, localGridData);
 
     return localGridData;
 }
@@ -47,14 +47,14 @@ void LocalGridDataBuilder::addElements(int rank, GridData& localGridData) {
     std::sort(localGridData.connectivities.begin(), localGridData.connectivities.end(), [](const auto& a, const auto& b){return a.back() < b.back();});
 }
 
-void LocalGridDataBuilder::addEntities(int rank, const std::vector<EntityData>& originals, std::vector<EntityData>& locals) {
+void LocalGridDataBuilder::addEntities(int rank, const std::vector<SectionData>& originals, std::vector<SectionData>& locals) {
     for (auto original : originals) {
         bool firstElementToAdd = true;
         for (int element = original.begin; element < original.end; ++element) {
             if (this->domainDivider->elementsLocalIndices[element][rank] != -1) {
                 if (firstElementToAdd) {
                     firstElementToAdd = false;
-                    locals.emplace_back(EntityData{original.name, original.dimension, this->domainDivider->elementsLocalIndices[element][rank], -1, std::vector<int>{}});
+                    locals.emplace_back(SectionData{original.name, original.dimension, this->domainDivider->elementsLocalIndices[element][rank], -1, std::vector<int>{}});
                 }
                 locals.back().end = this->domainDivider->elementsLocalIndices[element][rank] + 1;
             }
@@ -62,12 +62,12 @@ void LocalGridDataBuilder::addEntities(int rank, const std::vector<EntityData>& 
     }
 }
 
-void LocalGridDataBuilder::findVertices(std::vector<EntityData>& entities, GridData& localGridData) {
-    for (auto& entity : entities) {
+void LocalGridDataBuilder::findVertices(std::vector<SectionData>& sections, GridData& localGridData) {
+    for (auto& section : sections) {
         std::set<int> vertices;
-        for (auto position = localGridData.connectivities.cbegin() + entity.begin; position != localGridData.connectivities.cbegin() + entity.end; ++position) {
+        for (auto position = localGridData.connectivities.cbegin() + section.begin; position != localGridData.connectivities.cbegin() + section.end; ++position) {
             vertices.insert(position->cbegin() + 1, position->cend() - 1);
         }
-        entity.vertices = std::vector<int>{vertices.begin(), vertices.end()};
+        section.vertices = std::vector<int>{vertices.begin(), vertices.end()};
     }
 }

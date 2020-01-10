@@ -3,9 +3,9 @@
 
 std::vector<std::set<int>> GraphBuilder::buildGraph(GridDataPtr gridData) {
     std::vector<std::set<int>> neighbourhood(gridData->coordinates.size());
-    for (auto entity : gridData->entities) {
-        if (entity.dimension == gridData->dimension) {
-            for (auto element = gridData->connectivities.cbegin() + entity.begin; element != gridData->connectivities.cbegin() + entity.end; ++element) {
+    for (auto section : gridData->sections) {
+        if (section.dimension == gridData->dimension) {
+            for (auto element = gridData->connectivities.cbegin() + section.begin; element != gridData->connectivities.cbegin() + section.end; ++element) {
                 switch (element->front()) {
                     case TETRA_4:
                         this->addNeighbours(neighbourhood, this->getTetrahedronFaceNeighbours(element));

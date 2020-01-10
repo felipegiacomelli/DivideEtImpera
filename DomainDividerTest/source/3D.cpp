@@ -219,10 +219,10 @@ TestCase(LocalGridDataCase) {
             }
 
             {
-                auto entities = localGridData->entities;
-                checkEqual(entities.size(), 7u);
-                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 3;}), 1);
-                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 2;}), 6);
+                auto sections = localGridData->sections;
+                checkEqual(sections.size(), 7u);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 3;}), 1);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 2;}), 6);
             }
         }
         else {
@@ -257,10 +257,10 @@ TestCase(LocalGridDataCase) {
             }
 
             {
-                auto entities = localGridData->entities;
-                checkEqual(entities.size(), 7u);
-                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 3;}), 1);
-                checkEqual(std::count_if(entities.cbegin(), entities.cend(), [](const auto& e){return e.dimension == 2;}), 6);
+                auto sections = localGridData->sections;
+                checkEqual(sections.size(), 7u);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 3;}), 1);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 2;}), 6);
             }
         }
     }

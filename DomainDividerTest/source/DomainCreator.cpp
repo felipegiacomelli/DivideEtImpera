@@ -30,7 +30,7 @@ TestCase(DomainCreatorCase) {
 
             checkEqual(cgnsReader.gridData->coordinates.size(), this->gridData->coordinates.size());
             checkEqual(cgnsReader.gridData->connectivities.size(), this->gridData->connectivities.size());
-            checkEqual(cgnsReader.gridData->entities.size(), this->gridData->entities.size());
+            checkEqual(cgnsReader.gridData->sections.size(), this->gridData->sections.size());
 
             auto coordinates = cgnsReader.gridData->coordinates;
             checkEqual(coordinates.size(), this->gridData->coordinates.size());
