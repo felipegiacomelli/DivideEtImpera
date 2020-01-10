@@ -30,14 +30,14 @@ void SubdomainCreator::defineQuantities() {
     const auto& cs = this->gridData->connectivities;
 
     if (this->gridData->dimension == 2) {
-        this->numberOfElements = std::count_if(cs.begin(), cs.cend(), [](const auto& c){return c[0] == TRI_3 || c[0] == QUAD_4;});
-        this->numberOfFacets = std::count_if(cs.begin(), cs.cend(), [](const auto& c){return c[0] == BAR_2;});
+        this->numberOfElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == TRI_3 || c[0] == QUAD_4;});
+        this->numberOfFacets = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == BAR_2;});
         this->numberOfWellElements = 0;
     }
     else if (this->gridData->dimension == 3) {
         this->numberOfElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == TETRA_4 || c[0] == HEXA_8 || c[0] == PENTA_6 || c[0] == PYRA_5;});
-        this->numberOfFacets = std::count_if(cs.begin(), cs.cend(), [](const auto& c){return c[0] == TRI_3 || c[0] == QUAD_4;});
-        this->numberOfWellElements = std::count_if(cs.begin(), cs.cend(), [](const auto& c){return c[0] == BAR_2;});
+        this->numberOfFacets = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == TRI_3 || c[0] == QUAD_4;});
+        this->numberOfWellElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == BAR_2;});
     }
     else
         throw std::runtime_error(std::string(__PRETTY_FUNCTION__) + " - gridData dimension must be either 2 or 3");
