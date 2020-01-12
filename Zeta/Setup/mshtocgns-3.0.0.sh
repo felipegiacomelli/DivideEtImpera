@@ -10,7 +10,7 @@ if [ ! -d "$LIBRARY" ]; then
 fi
 
 cd $LIBRARY
-git checkout v2.0.0
+git checkout v3.0.0
 
 cd Zeta/Setup/
 ./setup.sh
