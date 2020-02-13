@@ -40,7 +40,7 @@ void DomainDivider::defineQuantities() {
     if (this->gridData->dimension == 2) {
         this->numberOfElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == TRI_3 || c[0] == QUAD_4;});
         this->numberOfFacets = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == BAR_2;});
-        this->numberOfWellElements = 0;
+        this->numberOfWellElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == NODE;});
     }
     else  {
         this->numberOfElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == TETRA_4 || c[0] == HEXA_8 || c[0] == PENTA_6 || c[0] == PYRA_5;});
