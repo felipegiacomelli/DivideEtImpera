@@ -2,8 +2,8 @@
 
 rm -rf *.tar.gz
 
-if [ ! -d "mshtocgns-2.0.0" ]; then
-    rm -rf mshtocgns-2.0.0
+if [ ! -d "mshtocgns-3.0.0" ]; then
+    rm -rf mshtocgns-3.0.0
 fi
 
 if [ ! -d "metis-5.1.0" ]; then

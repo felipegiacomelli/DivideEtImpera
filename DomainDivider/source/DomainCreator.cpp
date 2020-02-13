@@ -33,13 +33,9 @@ void DomainCreator::reorderCoordinates() {
 }
 
 void DomainCreator::rectifyConnectivities() {
-    this->rectifyConnectivity(this->gridData->tetrahedrons);
-    this->rectifyConnectivity(this->gridData->hexahedrons);
-    this->rectifyConnectivity(this->gridData->prisms);
-    this->rectifyConnectivity(this->gridData->pyramids);
-    this->rectifyConnectivity(this->gridData->triangles);
-    this->rectifyConnectivity(this->gridData->quadrangles);
-    this->rectifyConnectivity(this->gridData->lines);
+    for (auto& connectivity : this->gridData->connectivities)
+        for (auto index = connectivity.begin() + 1; index != connectivity.end() - 1; ++index)
+            *index = this->oldToNew[*index];
 }
 
 void DomainCreator::createOutputFile() {

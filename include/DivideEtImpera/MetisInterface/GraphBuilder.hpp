@@ -13,17 +13,14 @@ class GraphBuilder {
         virtual ~GraphBuilder() = default;
 
     private:
-        virtual std::vector<std::set<int>> buildGraph2D(GridDataPtr gridData);
-        std::pair<int, int> getTriangleFaceNeighbours(const std::array<int, 4>& triangles, int face);
-        std::pair<int, int> getQuadrangleFaceNeighbours(const std::array<int, 5>& quadrangles, int face);
+        std::vector<std::pair<int, int>> getTetrahedronFaceNeighbours(std::vector<std::vector<int>>::const_iterator tetrahedrons);
+        std::vector<std::pair<int, int>> getHexahedronFaceNeighbours(std::vector<std::vector<int>>::const_iterator hexahedrons);
+        std::vector<std::pair<int, int>> getPrismFaceNeighbours(std::vector<std::vector<int>>::const_iterator prisms);
+        std::vector<std::pair<int, int>> getPyramidFaceNeighbours(std::vector<std::vector<int>>::const_iterator pyramids);
+        std::vector<std::pair<int, int>> getTriangleFaceNeighbours(std::vector<std::vector<int>>::const_iterator triangles);
+        std::vector<std::pair<int, int>> getQuadrangleFaceNeighbours(std::vector<std::vector<int>>::const_iterator quadrangles);
 
-        virtual std::vector<std::set<int>> buildGraph3D(GridDataPtr gridData);
-        std::pair<int, int> getTetrahedronFaceNeighbours(const std::array<int, 5>& tetrahedrons, int face);
-        std::pair<int, int> getHexahedronFaceNeighbours(const std::array<int, 9>& hexahedrons, int face);
-        std::pair<int, int> getPrismFaceNeighbours(const std::array<int, 7>& prisms, int face);
-        std::pair<int, int> getPyramidFaceNeighbours(const std::array<int, 6>& pyramids, int face);
-
-        void addNeighbours(std::vector<std::set<int>>& neighbourhood, std::pair<int, int>&& neighbours);
+        void addNeighbours(std::vector<std::set<int>>& neighbourhood, std::vector<std::pair<int, int>>&& neighbours);
 };
 
 #endif

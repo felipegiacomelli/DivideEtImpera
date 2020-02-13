@@ -8,11 +8,12 @@
 namespace boost {
     namespace serialization {
         template<class Archive>
-        void serialize(Archive& ar, EntityData& entityData, const unsigned int) {
-            ar & entityData.name;
-            ar & entityData.begin;
-            ar & entityData.end;
-            ar & entityData.vertices;
+        void serialize(Archive& ar, SectionData& sectionData, const unsigned int) {
+            ar & sectionData.name;
+            ar & sectionData.dimension;
+            ar & sectionData.begin;
+            ar & sectionData.end;
+            ar & sectionData.vertices;
         }
 
         template<class Archive>
@@ -20,19 +21,8 @@ namespace boost {
             ar & gridData.dimension;
 
             ar & gridData.coordinates;
-
-            ar & gridData.tetrahedrons;
-            ar & gridData.hexahedrons;
-            ar & gridData.prisms;
-            ar & gridData.pyramids;
-            ar & gridData.triangles;
-            ar & gridData.quadrangles;
-            ar & gridData.lines;
-            ar & gridData.points;
-
-            ar & gridData.boundaries;
-            ar & gridData.regions;
-            ar & gridData.wells;
+            ar & gridData.connectivities;
+            ar & gridData.sections;
 
             ar & gridData.numberOfLocalVertices;
         }

@@ -1,6 +1,7 @@
 #include <MSHtoCGNS/BoostInterface/Test.hpp>
 #include "DivideEtImpera/UnitTest/GridDataFixture.hpp"
 #include "DivideEtImpera/DomainDivider/DomainDivider.hpp"
+#include <cgnslib.h>
 
 #define TOLERANCE 1.0e-12
 
@@ -126,55 +127,86 @@ TestCase(LocalGridDataCase) {
             checkClose(localGridData->coordinates[4][0], 2.0, TOLERANCE); checkClose(localGridData->coordinates[4][1], 0.0, TOLERANCE);
             checkClose(localGridData->coordinates[5][0], 2.0, TOLERANCE); checkClose(localGridData->coordinates[5][1], 1.0, TOLERANCE);
 
-            checkEqual(localGridData->triangles.size(), 4u);
-            checkEqual(localGridData->triangles[0][0], 0); checkEqual(localGridData->triangles[0][1], 3); checkEqual(localGridData->triangles[0][2], 2); checkEqual(localGridData->triangles[0][3], 0);
-            checkEqual(localGridData->triangles[1][0], 0); checkEqual(localGridData->triangles[1][1], 2); checkEqual(localGridData->triangles[1][2], 1); checkEqual(localGridData->triangles[1][3], 1);
-            checkEqual(localGridData->triangles[2][0], 3); checkEqual(localGridData->triangles[2][1], 4); checkEqual(localGridData->triangles[2][2], 2); checkEqual(localGridData->triangles[2][3], 2);
-            checkEqual(localGridData->triangles[3][0], 4); checkEqual(localGridData->triangles[3][1], 5); checkEqual(localGridData->triangles[3][2], 2); checkEqual(localGridData->triangles[3][3], 3);
+            {
+                std::vector<std::vector<int>> expected{
+                    {5, 0, 3, 2, 0},
+                    {5, 0, 2, 1, 1},
+                    {5, 3, 4, 2, 2},
+                    {5, 4, 5, 2, 3},
+                    {3, 0, 3, 4},
+                    {3, 5, 2, 5},
+                    {3, 2, 1, 6},
+                    {3, 1, 0, 7}
+                };
 
-            checkEqual(localGridData->lines.size(), 4u);
-            checkEqual(localGridData->lines[0][0], 0); checkEqual(localGridData->lines[0][1], 3); checkEqual(localGridData->lines[0][2], 4);
-            checkEqual(localGridData->lines[1][0], 5); checkEqual(localGridData->lines[1][1], 2); checkEqual(localGridData->lines[1][2], 5);
-            checkEqual(localGridData->lines[2][0], 2); checkEqual(localGridData->lines[2][1], 1); checkEqual(localGridData->lines[2][2], 6);
-            checkEqual(localGridData->lines[3][0], 1); checkEqual(localGridData->lines[3][1], 0); checkEqual(localGridData->lines[3][2], 7);
+                auto connectivities = localGridData->connectivities;
+                checkEqualCollections(connectivities[ 0].cbegin(), connectivities[ 0].cend(), expected[ 0].cbegin(), expected[ 0].cend());
+                checkEqualCollections(connectivities[ 1].cbegin(), connectivities[ 1].cend(), expected[ 1].cbegin(), expected[ 1].cend());
+                checkEqualCollections(connectivities[ 2].cbegin(), connectivities[ 2].cend(), expected[ 2].cbegin(), expected[ 2].cend());
+                checkEqualCollections(connectivities[ 3].cbegin(), connectivities[ 3].cend(), expected[ 3].cbegin(), expected[ 3].cend());
+                checkEqualCollections(connectivities[ 4].cbegin(), connectivities[ 4].cend(), expected[ 4].cbegin(), expected[ 4].cend());
+                checkEqualCollections(connectivities[ 5].cbegin(), connectivities[ 5].cend(), expected[ 5].cbegin(), expected[ 5].cend());
+                checkEqualCollections(connectivities[ 6].cbegin(), connectivities[ 6].cend(), expected[ 6].cbegin(), expected[ 6].cend());
+                checkEqualCollections(connectivities[ 7].cbegin(), connectivities[ 7].cend(), expected[ 7].cbegin(), expected[ 7].cend());
+            }
 
-            checkEqual(localGridData->regions.size(), 2u);
-            checkEqual(localGridData->boundaries.size(), 3u);
+            {
+                auto sections = localGridData->sections;
+                checkEqual(sections.size(), 5u);
 
-            auto region = localGridData->regions[0];
-            checkEqual(region.name, "A"); checkEqual(region.begin, 0); checkEqual(region.end, 2);
-            checkEqual(region.vertices.size(), 4u);
-            checkEqual(region.vertices[0], 0);
-            checkEqual(region.vertices[1], 1);
-            checkEqual(region.vertices[2], 2);
-            checkEqual(region.vertices[3], 3);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 2;}), 2);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 1;}), 3);
 
-            region = localGridData->regions[1];
-            checkEqual(region.name, "B"); checkEqual(region.begin, 2); checkEqual(region.end, 4);
-            checkEqual(region.vertices.size(), 4u);
-            checkEqual(region.vertices[0], 2);
-            checkEqual(region.vertices[1], 3);
-            checkEqual(region.vertices[2], 4);
-            checkEqual(region.vertices[3], 5);
+                {
+                    auto section = sections[0];
+                    checkEqual(section.name, std::string("A"));
+                    checkEqual(section.dimension, 2);
+                    checkEqual(section.begin, 0);
+                    checkEqual(section.end, 2);
+                    std::vector<int> expected{0, 1, 2, 3};
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
+                }
 
-            auto boundary = localGridData->boundaries[0];
-            checkEqual(boundary.name, "SOUTH"); checkEqual(boundary.begin, 4); checkEqual(boundary.end, 5);
-            checkEqual(boundary.vertices.size(), 2u);
-            checkEqual(boundary.vertices[0], 0);
-            checkEqual(boundary.vertices[1], 3);
+                {
+                    auto section = sections[1];
+                    checkEqual(section.name, std::string("B"));
+                    checkEqual(section.dimension, 2);
+                    checkEqual(section.begin, 2);
+                    checkEqual(section.end, 4);
+                    std::vector<int> expected{2, 3, 4, 5};
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
+                }
 
-            boundary = localGridData->boundaries[1];
-            checkEqual(boundary.name, "NORTH"); checkEqual(boundary.begin, 5); checkEqual(boundary.end, 7);
-            checkEqual(boundary.vertices.size(), 3u);
-            checkEqual(boundary.vertices[0], 1);
-            checkEqual(boundary.vertices[1], 2);
-            checkEqual(boundary.vertices[2], 5);
+                {
+                    auto section = sections[2];
+                    checkEqual(section.name, std::string("SOUTH"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 4);
+                    checkEqual(section.end, 5);
+                    std::vector<int> expected{0, 3};
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
+                }
 
-            boundary = localGridData->boundaries[2];
-            checkEqual(boundary.name, "WEST");  checkEqual(boundary.begin, 7); checkEqual(boundary.end, 8);
-            checkEqual(boundary.vertices.size(), 2u);
-            checkEqual(boundary.vertices[0], 0);
-            checkEqual(boundary.vertices[1], 1);
+                {
+                    auto section = sections[3];
+                    checkEqual(section.name, std::string("NORTH"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 5);
+                    checkEqual(section.end, 7);
+                    std::vector<int> expected{1, 2, 5};
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
+                }
+
+                {
+                    auto section = sections[4];
+                    checkEqual(section.name, std::string("WEST"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 7);
+                    checkEqual(section.end, 8);
+                    std::vector<int> expected{0, 1};
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
+                }
+            }
         }
         else {
             DomainDivider domainDivider;
@@ -196,53 +228,86 @@ TestCase(LocalGridDataCase) {
             checkClose(localGridData->coordinates[3][0], 0.0, TOLERANCE); checkClose(localGridData->coordinates[3][1], 0.0, TOLERANCE);
             checkClose(localGridData->coordinates[4][0], 1.0, TOLERANCE); checkClose(localGridData->coordinates[4][1], 1.0, TOLERANCE);
 
-            checkEqual(localGridData->triangles.size(), 3u);
-            checkEqual(localGridData->triangles[0][0], 3); checkEqual(localGridData->triangles[0][1], 0); checkEqual(localGridData->triangles[0][2], 4); checkEqual(localGridData->triangles[0][3], 0);
-            checkEqual(localGridData->triangles[1][0], 0); checkEqual(localGridData->triangles[1][1], 2); checkEqual(localGridData->triangles[1][2], 4); checkEqual(localGridData->triangles[1][3], 1);
-            checkEqual(localGridData->triangles[2][0], 2); checkEqual(localGridData->triangles[2][1], 1); checkEqual(localGridData->triangles[2][2], 4); checkEqual(localGridData->triangles[2][3], 2);
+            {
+                std::vector<std::vector<int>> expected{
+                    {5, 3, 0, 4, 0},
+                    {5, 0, 2, 4, 1},
+                    {5, 2, 1, 4, 2},
+                    {3, 3, 0, 3},
+                    {3, 0, 2, 4},
+                    {3, 2, 1, 5},
+                    {3, 1, 4, 6}
+                };
 
-            checkEqual(localGridData->lines.size(), 4u);
-            checkEqual(localGridData->lines[0][0], 3); checkEqual(localGridData->lines[0][1], 0); checkEqual(localGridData->lines[0][2], 3);
-            checkEqual(localGridData->lines[1][0], 0); checkEqual(localGridData->lines[1][1], 2); checkEqual(localGridData->lines[1][2], 4);
-            checkEqual(localGridData->lines[2][0], 2); checkEqual(localGridData->lines[2][1], 1); checkEqual(localGridData->lines[2][2], 5);
-            checkEqual(localGridData->lines[3][0], 1); checkEqual(localGridData->lines[3][1], 4); checkEqual(localGridData->lines[3][2], 6);
 
-            checkEqual(localGridData->regions.size(), 2u);
-            checkEqual(localGridData->boundaries.size(), 3u);
+                auto connectivities = localGridData->connectivities;
+                checkEqualCollections(connectivities[ 0].cbegin(), connectivities[ 0].cend(), expected[ 0].cbegin(), expected[ 0].cend());
+                checkEqualCollections(connectivities[ 1].cbegin(), connectivities[ 1].cend(), expected[ 1].cbegin(), expected[ 1].cend());
+                checkEqualCollections(connectivities[ 2].cbegin(), connectivities[ 2].cend(), expected[ 2].cbegin(), expected[ 2].cend());
+                checkEqualCollections(connectivities[ 3].cbegin(), connectivities[ 3].cend(), expected[ 3].cbegin(), expected[ 3].cend());
+                checkEqualCollections(connectivities[ 4].cbegin(), connectivities[ 4].cend(), expected[ 4].cbegin(), expected[ 4].cend());
+                checkEqualCollections(connectivities[ 5].cbegin(), connectivities[ 5].cend(), expected[ 5].cbegin(), expected[ 5].cend());
+                checkEqualCollections(connectivities[ 6].cbegin(), connectivities[ 6].cend(), expected[ 6].cbegin(), expected[ 6].cend());
+            }
 
-            auto region = localGridData->regions[0];
-            checkEqual(region.name, "A"); checkEqual(region.begin, 0); checkEqual(region.end, 1);
-            checkEqual(region.vertices.size(), 3u);
-            checkEqual(region.vertices[0], 0);
-            checkEqual(region.vertices[1], 3);
-            checkEqual(region.vertices[2], 4);
 
-            region = localGridData->regions[1];
-            checkEqual(region.name, "B"); checkEqual(region.begin, 1); checkEqual(region.end, 3);
-            checkEqual(region.vertices.size(), 4u);
-            checkEqual(region.vertices[0], 0);
-            checkEqual(region.vertices[1], 1);
-            checkEqual(region.vertices[2], 2);
-            checkEqual(region.vertices[3], 4);
+            {
+                auto sections = localGridData->sections;
+                checkEqual(sections.size(), 5u);
 
-            auto boundary = localGridData->boundaries[0];
-            checkEqual(boundary.name, "SOUTH"); checkEqual(boundary.begin, 3); checkEqual(boundary.end, 5);
-            checkEqual(boundary.vertices.size(), 3u);
-            checkEqual(boundary.vertices[0], 0);
-            checkEqual(boundary.vertices[1], 2);
-            checkEqual(boundary.vertices[2], 3);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 2;}), 2);
+                checkEqual(std::count_if(sections.cbegin(), sections.cend(), [](const auto& e){return e.dimension == 1;}), 3);
 
-            boundary = localGridData->boundaries[1];
-            checkEqual(boundary.name, "EAST");  checkEqual(boundary.begin, 5); checkEqual(boundary.end, 6);
-            checkEqual(boundary.vertices.size(), 2u);
-            checkEqual(boundary.vertices[0], 1);
-            checkEqual(boundary.vertices[1], 2);
+                {
+                    auto section = sections[0];
+                    checkEqual(section.name, std::string("A"));
+                    checkEqual(section.dimension, 2);
+                    checkEqual(section.begin, 0);
+                    checkEqual(section.end, 1);
+                    std::vector<int> expected{0, 3, 4};
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
+                }
 
-            boundary = localGridData->boundaries[2];
-            checkEqual(boundary.name, "NORTH"); checkEqual(boundary.begin, 6); checkEqual(boundary.end, 7);
-            checkEqual(boundary.vertices.size(), 2u);
-            checkEqual(boundary.vertices[0], 1);
-            checkEqual(boundary.vertices[1], 4);
+                {
+                    auto section = sections[1];
+                    checkEqual(section.name, std::string("B"));
+                    checkEqual(section.dimension, 2);
+                    checkEqual(section.begin, 1);
+                    checkEqual(section.end, 3);
+                    std::vector<int> expected{0, 1, 2, 4};
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
+                }
+
+                {
+                    auto section = sections[2];
+                    checkEqual(section.name, std::string("SOUTH"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 3);
+                    checkEqual(section.end, 5);
+                    std::vector<int> expected{0, 2, 3};
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
+                }
+
+                {
+                    auto section = sections[3];
+                    checkEqual(section.name, std::string("EAST"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 5);
+                    checkEqual(section.end, 6);
+                    std::vector<int> expected{1, 2};
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
+                }
+
+                {
+                    auto section = sections[4];
+                    checkEqual(section.name, std::string("NORTH"));
+                    checkEqual(section.dimension, 1);
+                    checkEqual(section.begin, 6);
+                    checkEqual(section.end, 7);
+                    std::vector<int> expected{1, 4};
+                    checkEqualCollections(section.vertices.cbegin(), section.vertices.cend(), expected.cbegin(), expected.cend());
+                }
+            }
         }
     }
 }

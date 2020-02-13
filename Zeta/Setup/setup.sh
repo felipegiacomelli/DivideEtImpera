@@ -14,7 +14,7 @@ fi
 
 cd $SETUP_DIRECTORY
 
-. mshtocgns-2.0.0.sh
+. mshtocgns-3.0.0.sh
 
 cd $SETUP_DIRECTORY
 

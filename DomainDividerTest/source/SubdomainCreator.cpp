@@ -1,6 +1,7 @@
 #include <MSHtoCGNS/BoostInterface/Test.hpp>
 #include "DivideEtImpera/UnitTest/DomainDividerFixture.hpp"
 #include "DivideEtImpera/DomainDivider/SubdomainCreator.hpp"
+#include <cgnslib.h>
 
 #define TOLERANCE 1.0e-6
 
@@ -27,11 +28,15 @@ TestCase(SubdomainCreatorCase) {
             SubdomainCreator subdomainCreator(this->subdomainData->localGridData, this->output);
             CgnsReader cgnsReader(subdomainCreator.getFileName());
 
-            checkEqual(cgnsReader.gridData->tetrahedrons.size(), 4u);
-            checkEqual(cgnsReader.gridData->prisms.size(), 2u);
-            checkEqual(cgnsReader.gridData->triangles.size(), 8u);
-            checkEqual(cgnsReader.gridData->quadrangles.size(), 4u);
-            checkEqual(cgnsReader.gridData->lines.size(), 1u);
+            {
+                auto connectivities = cgnsReader.gridData->connectivities;
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == TETRA_4;}), 4);
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == PENTA_6;}), 2);
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == TRI_3  ;}), 8);
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == QUAD_4 ;}), 4);
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == BAR_2  ;}), 1);
+                checkEqual(connectivities.size(), 19u);
+            }
 
             auto coordinates = cgnsReader.gridData->coordinates;
             checkEqual(coordinates.size(), 15u);
@@ -55,8 +60,12 @@ TestCase(SubdomainCreatorCase) {
             SubdomainCreator subdomainCreator(this->subdomainData->localGridData, this->output);
             CgnsReader cgnsReader(subdomainCreator.getFileName());
 
-            checkEqual(cgnsReader.gridData->tetrahedrons.size(), 10u);
-            checkEqual(cgnsReader.gridData->triangles.size(), 14u);
+            {
+                auto connectivities = cgnsReader.gridData->connectivities;
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == TETRA_4;}), 10);
+                checkEqual(std::count_if(connectivities.cbegin(), connectivities.cend(), [](const auto& c){return c.front() == TRI_3  ;}), 14);
+                checkEqual(connectivities.size(), 24u);
+            }
 
             auto coordinates = cgnsReader.gridData->coordinates;
             checkEqual(cgnsReader.gridData->coordinates.size(), 14u);

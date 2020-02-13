@@ -39,7 +39,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # ABOUT THE PROJECT
 ##################################################################
 project(DivideEtImpera)
-set(VERSION_MAJOR "0")
+set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
 set(VERSION_PATCH "1")
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
@@ -59,12 +59,12 @@ endif()
 ##############
 # BOOST
 ##############
-set(BOOST_VERSION "1.70.0")
+set(BOOST_VERSION "1.72.0")
 
 if(DEFINED ENV{BOOST_DIR})
     set(BOOST_ROOT $ENV{BOOST_DIR}/${BUILD_TYPE}/${LIBRARY_TYPE})
 else()
-    set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/Zeta/Setup/mshtocgns-2.0.0/Zeta/Libraries/boost-${BOOST_VERSION}/release)
+    set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/Zeta/Setup/mshtocgns-3.0.0/Zeta/Libraries/boost-${BOOST_VERSION}/release)
 endif()
 
 set(Components_Boost system filesystem unit_test_framework test_exec_monitor mpi serialization)
@@ -83,7 +83,7 @@ set(CGNS_VERSION "3.4.0")
 if(DEFINED ENV{CGNS_DIR})
     set(CGNS_DIR $ENV{CGNS_DIR}/${BUILD_TYPE}/${LIBRARY_TYPE})
 else()
-    set(CGNS_DIR ${CMAKE_SOURCE_DIR}/Zeta/Setup/mshtocgns-2.0.0/Zeta/Libraries/cgns-${CGNS_VERSION}/release)
+    set(CGNS_DIR ${CMAKE_SOURCE_DIR}/Zeta/Setup/mshtocgns-3.0.0/Zeta/Libraries/cgns-${CGNS_VERSION}/release)
 endif()
 
 find_package(CGNS ${CGNS_VERSION} EXACT COMPONENTS cgns_${LIBRARY_TYPE} REQUIRED)
@@ -94,7 +94,7 @@ endif()
 ##############
 # MSHtoCGNS
 ##############
-set(MSHTOCGNS_VERSION "2.0.0")
+set(MSHTOCGNS_VERSION "3.0.0")
 
 if(DEFINED ENV{MSHTOCGNS_DIR})
     set(MSHTOCGNS_DIR $ENV{MSHTOCGNS_DIR}/${BUILD_TYPE}/${LIBRARY_TYPE})
@@ -167,8 +167,6 @@ add_test(NAME "DomainDividerTest2" COMMAND mpirun -np 2 ${CMAKE_RUNTIME_OUTPUT_D
 add_subdirectory(ParallelCgnsInterface)
 add_subdirectory(ParallelCgnsInterfaceTest)
 add_test(NAME "ParallelCgnsInterfaceTest" COMMAND mpirun -np 2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/ParallelCgnsInterfaceTest)
-
-add_subdirectory(Divider)
 
 ##################################################################
 # INSTALLATION
