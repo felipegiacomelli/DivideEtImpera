@@ -1,7 +1,7 @@
 #!/bin/bash
 
-LIBRARY="metis-5.1.0"
-DOWNLOAD_LINK="http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/metis-5.1.0.tar.gz"
+LIBRARY="metis-$METIS_VERSION"
+DOWNLOAD_LINK="http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/$LIBRARY.tar.gz"
 COMPRESSED_LIBRARY=$LIBRARY.tar.gz
 BUILD_TYPE=`echo ${BUILD_TYPE,,}`
 FLAGS="-DMETIS_USE_LONGINDEX=1 -DMETIS_USE_DOUBLEPRECISION=1 -DGKLIB_PATH=../GKlib"

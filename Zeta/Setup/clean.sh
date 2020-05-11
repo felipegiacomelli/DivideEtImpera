@@ -2,12 +2,12 @@
 
 rm -rf *.tar.gz
 
-if [ ! -d "mshtocgns-3.0.0" ]; then
-    rm -rf mshtocgns-3.0.0
+if [ ! -d "mshtocgns-$MSHTOCGNS_VERSION" ]; then
+    rm -rf mshtocgns-$MSHTOCGNS_VERSION
 fi
 
-if [ ! -d "metis-5.1.0" ]; then
-    rm -rf metis-5.1.0
+if [ ! -d "metis-$METIS_VERSION" ]; then
+    rm -rf metis-$METIS_VERSION
 fi
 
 cd ..
