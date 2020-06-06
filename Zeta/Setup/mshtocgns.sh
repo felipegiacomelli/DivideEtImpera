@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LIBRARY="mshtocgns-4.0.0"
+LIBRARY="mshtocgns-$MSHTOCGNS_VERSION"
 BUILD_TYPE=`echo ${BUILD_TYPE,,}`
 FLAGS="-DENABLE_MSH=OFF -DBUILD_SHARED_LIBS=TRUE -DCMAKE_BUILD_TYPE=$BUILD_TYPE"
 
@@ -10,7 +10,7 @@ if [ ! -d "$LIBRARY" ]; then
 fi
 
 cd $LIBRARY
-git checkout "v$MSHtoCGNS_VERSION"
+git checkout "v$MSHTOCGNS_VERSION"
 
 cd Zeta/Setup/
 ./setup.sh

@@ -24,9 +24,9 @@ install:
 
     cd $APPVEYOR_BUILD_FOLDER
 
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/Zeta/Setup/mshtocgns-3.0.0/Zeta/Libraries/boost-1.72.0/release/lib
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/Zeta/Setup/mshtocgns-3.0.0/Zeta/Libraries/cgns-3.4.0/release/lib
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/Zeta/Libraries/mshtocgns-3.0.0/release/lib
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/Zeta/Setup/mshtocgns-5.0.0/Zeta/Libraries/boost-1.72.0/release/lib
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/Zeta/Setup/mshtocgns-5.0.0/Zeta/Libraries/cgns-3.4.0/release/lib
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/Zeta/Libraries/mshtocgns-5.0.0/release/lib
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/Zeta/Libraries/metis-5.1.0/release/lib
 
     export LD_LIBRARY_PATH

@@ -60,11 +60,12 @@ endif()
 # BOOST
 ##############
 set(BOOST_VERSION "1.72.0")
+set(MSHTOCGNS_VERSION "5.0.0")
 
 if(DEFINED ENV{BOOST_DIR})
     set(BOOST_ROOT $ENV{BOOST_DIR}/${BUILD_TYPE}/${LIBRARY_TYPE})
 else()
-    set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/Zeta/Setup/mshtocgns-3.0.0/Zeta/Libraries/boost-${BOOST_VERSION}/release)
+    set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/Zeta/Setup/mshtocgns-${MSHTOCGNS_VERSION}/Zeta/Libraries/boost-${BOOST_VERSION}/release)
 endif()
 
 set(Components_Boost system filesystem unit_test_framework test_exec_monitor mpi serialization)
@@ -86,17 +87,17 @@ else()
     set(HDF5_ROOT "/usr/lib/x86_64-linux-gnu/hdf5/openmpi")
 endif()
 
-find_package (HDF5 NAMES hdf5 COMPONENTS C ${LIBRARY_TYPE})
+find_package(HDF5 NAMES hdf5 COMPONENTS C ${LIBRARY_TYPE})
 
 ##############
 # CGNS
 ##############
-set(CGNS_VERSION "4.1.1")
+set(CGNS_VERSION "3.4.0")
 
 if(DEFINED ENV{CGNS_DIR})
     set(CGNS_DIR $ENV{CGNS_DIR}/${BUILD_TYPE}/${LIBRARY_TYPE})
 else()
-    set(CGNS_DIR ${CMAKE_SOURCE_DIR}/Zeta/Setup/mshtocgns-3.0.0/Zeta/Libraries/cgns-${CGNS_VERSION}/release)
+    set(CGNS_DIR ${CMAKE_SOURCE_DIR}/Zeta/Setup/mshtocgns-${MSHTOCGNS_VERSION}/Zeta/Libraries/cgns-${CGNS_VERSION}/release)
 endif()
 
 find_package(CGNS ${CGNS_VERSION} EXACT COMPONENTS cgns_${LIBRARY_TYPE} REQUIRED)
@@ -107,8 +108,6 @@ endif()
 ##############
 # MSHtoCGNS
 ##############
-set(MSHTOCGNS_VERSION "4.0.0")
-
 if(DEFINED ENV{MSHTOCGNS_DIR})
     set(MSHTOCGNS_DIR $ENV{MSHTOCGNS_DIR}/${BUILD_TYPE}/${LIBRARY_TYPE})
 else()

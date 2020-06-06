@@ -1,6 +1,7 @@
 #ifndef __METIS_INTERFACE_GRAPH_BUILDER_HPP__
 #define __METIS_INTERFACE_GRAPH_BUILDER_HPP__
 
+#include <stdexcept>
 #include <set>
 #include <MSHtoCGNS/GridData/GridData.hpp>
 
