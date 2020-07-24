@@ -44,6 +44,9 @@ class DomainDivider {
         SubdomainDataPtr createSubdomainData(GridDataPtr gridData);
         SubdomainDataPtr createSubdomainData();
 
+        boost::unordered_map<std::string, std::vector<std::pair<int, std::array<double, 3>>>> buildVerticesOfWells();
+        boost::unordered_map<std::string, std::vector<std::pair<int, std::array<double, 3>>>> buildVerticesOfWells(GridDataPtr gridData);
+
         GridDataPtr gridData;
 
         boost::mpi::communicator world;
@@ -64,6 +67,8 @@ class DomainDivider {
 
         GridDataPtr localGridData;
         std::vector<int> globalIndices;
+
+        boost::unordered_map<std::string, std::vector<std::pair<int, std::array<double, 3>>>> verticesOfWells;
 };
 
 #endif

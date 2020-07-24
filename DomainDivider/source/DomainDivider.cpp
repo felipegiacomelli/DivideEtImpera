@@ -4,6 +4,7 @@
 
 SubdomainDataPtr DomainDivider::divideDomain(GridDataPtr gridData, DomainPartitioner domainPartitioner) {
     if (this->world.size() == 1) {
+        this->verticesOfWells = this->buildVerticesOfWells(gridData);
         return createSubdomainData(gridData);
     }
 
@@ -13,6 +14,7 @@ SubdomainDataPtr DomainDivider::divideDomain(GridDataPtr gridData, DomainPartiti
     auto localGridDataBuilder = boost::make_shared<LocalGridDataBuilder>(this);
     this->globalIndices = this->buildGlobalIndices(0);
     this->localGridData = boost::make_shared<GridData>(localGridDataBuilder->buildLocalGridData(0));
+    this->verticesOfWells = this->buildVerticesOfWells();
 
     this->sendLocalGridDatas(localGridDataBuilder);
     this->sendGlobalIndices();
@@ -150,6 +152,7 @@ SubdomainDataPtr DomainDivider::createSubdomainData() {
     SubdomainDataPtr subdomainData{boost::make_shared<SubdomainData>(this->localGridData, this->globalIndices)};
     subdomainData->verticesOfSubdomains = this->verticesOfSubdomains;
     subdomainData->elementsOfSubdomains = this->elementsOfSubdomains;
+    subdomainData->verticesOfWells = this->verticesOfWells;
     subdomainData->subdomainSizes = this->subdomainSizes;
     return subdomainData;
 }
@@ -157,5 +160,35 @@ SubdomainDataPtr DomainDivider::createSubdomainData() {
 SubdomainDataPtr DomainDivider::createSubdomainData(GridDataPtr gridData) {
     SubdomainDataPtr subdomainData{boost::make_shared<SubdomainData>(gridData, std::vector<int>{})};
     subdomainData->subdomainSizes = std::vector<int>{0, gridData->numberOfLocalVertices};
+    subdomainData->verticesOfWells = this->verticesOfWells;
     return subdomainData;
+}
+
+boost::unordered_map<std::string, std::vector<std::pair<int, std::array<double, 3>>>> DomainDivider::buildVerticesOfWells() {
+    boost::unordered_map<std::string, std::vector<std::pair<int, std::array<double, 3>>>> verticesOfWells;
+    for (auto section : this->gridData->sections) {
+        if (this->gridData->dimension == 3 && section.dimension == 1) {
+            verticesOfWells[section.name].reserve(section.vertices.size());
+            for (auto vertex : section.vertices) {
+                auto indices = this->verticesLocalIndices[vertex];
+                auto local = std::find_if(indices.cbegin(), indices.cend(), [=](const auto& i){return i.first == this->subdomains[vertex];});
+                int index = local->second + this->subdomainShifts[this->subdomains[vertex]];
+                verticesOfWells[section.name].emplace_back(std::make_pair(index, this->gridData->coordinates[vertex]));
+            }
+        }
+    }
+    return verticesOfWells;
+}
+
+boost::unordered_map<std::string, std::vector<std::pair<int, std::array<double, 3>>>> DomainDivider::buildVerticesOfWells(GridDataPtr gridData) {
+    boost::unordered_map<std::string, std::vector<std::pair<int, std::array<double, 3>>>> verticesOfWells;
+    for (auto section : gridData->sections) {
+        if (gridData->dimension == 3 && section.dimension == 1) {
+            verticesOfWells[section.name].reserve(section.vertices.size());
+            for (auto vertex : section.vertices) {
+                verticesOfWells[section.name].emplace_back(std::make_pair(vertex, gridData->coordinates[vertex]));
+            }
+        }
+    }
+    return verticesOfWells;
 }

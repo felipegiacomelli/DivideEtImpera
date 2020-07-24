@@ -1,8 +1,9 @@
 #ifndef __GRID_DATA_DIVIDER_LOCAL_GRID_DATA_BUILDER_HPP__
 #define __GRID_DATA_DIVIDER_LOCAL_GRID_DATA_BUILDER_HPP__
 
-#include <unordered_map>
 #include <set>
+
+#include <boost/unordered_map.hpp>
 
 #include "DivideEtImpera/DomainDivider/DomainDivider.hpp"
 
@@ -26,7 +27,7 @@ class LocalGridDataBuilder {
 
         DomainDivider* domainDivider;
 
-        std::unordered_map<int, int> originalToLocal;
+        boost::unordered_map<int, int> originalToLocal;
         std::vector<std::vector<int>> localConnectivities;
 };
 

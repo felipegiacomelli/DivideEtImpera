@@ -26,7 +26,7 @@ class DomainCreator {
 
         boost::mpi::communicator world;
         std::vector<int> sizes;
-        std::unordered_map<int, int> oldToNew;
+        boost::unordered_map<int, int> oldToNew;
         std::string fileName;
 };
 
