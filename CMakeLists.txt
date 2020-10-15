@@ -39,7 +39,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # ABOUT THE PROJECT
 ##################################################################
 project(DivideEtImpera)
-set(VERSION_MAJOR "3")
+set(VERSION_MAJOR "4")
 set(VERSION_MINOR "0")
 set(VERSION_PATCH "0")
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
@@ -59,8 +59,8 @@ endif()
 ##############
 # BOOST
 ##############
-set(BOOST_VERSION "1.72.0")
-set(MSHTOCGNS_VERSION "6.0.0")
+set(BOOST_VERSION "1.74.0")
+set(MSHTOCGNS_VERSION "7.0.0")
 
 if(DEFINED ENV{BOOST_DIR})
     set(BOOST_ROOT $ENV{BOOST_DIR}/${BUILD_TYPE}/${LIBRARY_TYPE})
@@ -92,7 +92,7 @@ find_package(HDF5 NAMES hdf5 COMPONENTS C ${LIBRARY_TYPE})
 ##############
 # CGNS
 ##############
-set(CGNS_VERSION "3.4.0")
+set(CGNS_VERSION "4.1.2")
 
 if(DEFINED ENV{CGNS_DIR})
     set(CGNS_DIR $ENV{CGNS_DIR}/${BUILD_TYPE}/${LIBRARY_TYPE})

@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.0.0] - 2020-10-15
+
+### Changed
+
+- Using MSHtoCGNS-7.0.0
+
+[4.0.0]: https://github.com/felipegiacomelli/DivideEtImpera/compare/v3.0.0...v4.0.0
+
 ## [3.0.0] - 2020-07-24
 
 ### Added

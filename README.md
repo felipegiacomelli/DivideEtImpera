@@ -39,10 +39,10 @@ To build, it is necessary
 - [cmake](https://cmake.org/) 3.14.4 (at least)
 - [make](https://www.gnu.org/software/make/)
 - [HDF5](https://www.hdfgroup.org/solutions/hdf5/) 1.10.0 (at least)
-- [CGNS](https://cgns.github.io/index.html) 3.4.0
-- [Boost](https://www.boost.org/) 1.70
+- [CGNS](https://cgns.github.io/index.html) 4.1.2
+- [Boost](https://www.boost.org/) 1.74.0
 - [METIS](http://glaros.dtc.umn.edu/gkhome/metis/metis/overview) 5.1.0
-- [MSHtoCGNS](https://github.com/felipegiacomelli/MSHtoCGNS) 2.0.0
+- [MSHtoCGNS](https://github.com/felipegiacomelli/MSHtoCGNS) 7.0.0
 
 Once you have installed the first three dependecies, you may install **Boost**, **HDF5**, **CGNS**, **METIS** and **MSHtoCGNS** by executing **setup.sh** located in *Zeta/Setup/*. This script will install **shared libraries** in **release** variant.
 
