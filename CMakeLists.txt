@@ -39,7 +39,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # ABOUT THE PROJECT
 ##################################################################
 project(DivideEtImpera)
-set(VERSION_MAJOR "4")
+set(VERSION_MAJOR "5")
 set(VERSION_MINOR "0")
 set(VERSION_PATCH "0")
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
@@ -60,7 +60,7 @@ endif()
 # BOOST
 ##############
 set(BOOST_VERSION "1.74.0")
-set(MSHTOCGNS_VERSION "7.0.0")
+set(MSHTOCGNS_VERSION "8.0.0")
 
 if(DEFINED ENV{BOOST_DIR})
     set(BOOST_ROOT $ENV{BOOST_DIR}/${BUILD_TYPE}/${LIBRARY_TYPE})
