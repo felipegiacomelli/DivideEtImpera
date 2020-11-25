@@ -5,7 +5,7 @@ export LIBRARY_INSTALL_DIRECTORY=$PWD/../Libraries
 export BUILD_TYPE="release"
 export NUMBER_OF_CORES=`nproc`
 
-export MSHTOCGNS_VERSION="7.0.0"
+export MSHTOCGNS_VERSION="8.0.0"
 export METIS_VERSION="5.1.0"
 
 cd ..
