@@ -39,15 +39,29 @@ void DomainDivider::setupBuild(DomainPartitioner domainPartitioner) {
 void DomainDivider::defineQuantities() {
     const auto& cs = this->gridData->connectivities;
 
+    std::vector<int> nodes{NODE};
+    std::vector<int> bars{BAR_2, BAR_3, BAR_4};
+    std::vector<int> triangles{TRI_3, TRI_6, TRI_9, TRI_10};
+    std::vector<int> quadrangles{QUAD_4, QUAD_8, QUAD_9, QUAD_12, QUAD_16};
+    std::vector<int> tetrahedrons{TETRA_4, TETRA_10, TETRA_16, TETRA_20};
+    std::vector<int> hexahedrons{HEXA_8, HEXA_20, HEXA_27, HEXA_32, HEXA_56, HEXA_64};
+    std::vector<int> prisms{PENTA_6, PENTA_15, PENTA_18, PENTA_24, PENTA_38, PENTA_40};
+    std::vector<int> pyramids{PYRA_5, PYRA_14, PYRA_13, PYRA_21, PYRA_29, PYRA_30};
+
     if (this->gridData->dimension == 2) {
-        this->numberOfElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == TRI_3 || c[0] == QUAD_4;});
-        this->numberOfFacets = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == BAR_2;});
-        this->numberOfWellElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == NODE;});
+        this->numberOfElements += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(triangles.cbegin(), triangles.cend(), c[0]);});
+        this->numberOfElements += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(quadrangles.cbegin(), quadrangles.cend(), c[0]);});
+        this->numberOfFacets += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(bars.cbegin(), bars.cend(), c[0]);});
+        this->numberOfWellElements += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(nodes.cbegin(), nodes.cend(), c[0]);});
     }
     else  {
-        this->numberOfElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == TETRA_4 || c[0] == HEXA_8 || c[0] == PENTA_6 || c[0] == PYRA_5;});
-        this->numberOfFacets = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == TRI_3 || c[0] == QUAD_4;});
-        this->numberOfWellElements = std::count_if(cs.cbegin(), cs.cend(), [](const auto& c){return c[0] == BAR_2;});
+        this->numberOfElements += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(tetrahedrons.cbegin(), tetrahedrons.cend(), c[0]);});
+        this->numberOfElements += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(hexahedrons.cbegin(), hexahedrons.cend(), c[0]);});
+        this->numberOfElements += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(prisms.cbegin(), prisms.cend(), c[0]);});
+        this->numberOfElements += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(pyramids.cbegin(), pyramids.cend(), c[0]);});
+        this->numberOfFacets += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(triangles.cbegin(), triangles.cend(), c[0]);});
+        this->numberOfFacets += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(quadrangles.cbegin(), quadrangles.cend(), c[0]);});
+        this->numberOfWellElements += std::count_if(cs.cbegin(), cs.cend(), [&](const auto& c){return hasElement(bars.cbegin(), bars.cend(), c[0]);});
     }
 }
 

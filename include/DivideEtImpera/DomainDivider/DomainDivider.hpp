@@ -3,6 +3,7 @@
 
 #include <list>
 #include <MSHtoCGNS/Utilities/Vector.hpp>
+#include <MSHtoCGNS/Utilities/Algorithm.hpp>
 
 #include "DivideEtImpera/BoostInterface/Serialization.hpp"
 #include "DivideEtImpera/BoostInterface/Mpi.hpp"
@@ -50,7 +51,9 @@ class DomainDivider {
         GridDataPtr gridData;
 
         boost::mpi::communicator world;
-        int numberOfElements, numberOfFacets, numberOfWellElements;
+        int numberOfElements = 0;
+        int numberOfFacets = 0;
+        int numberOfWellElements = 0;
 
         std::vector<int> subdomains;
         std::vector<std::list<std::pair<int, int>>> verticesLocalIndices;

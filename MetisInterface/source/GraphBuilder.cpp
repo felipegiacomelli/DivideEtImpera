@@ -10,21 +10,102 @@ std::vector<std::set<int>> GraphBuilder::buildGraph(GridDataPtr gridData) {
                     case TETRA_4:
                         this->addNeighbours(neighbourhood, this->getTetrahedronFaceNeighbours(element));
                         break;
+                    case TETRA_10:
+                        this->addNeighbours(neighbourhood, this->getTetrahedronFaceNeighbours(element));
+                        break;
+                    case TETRA_16:
+                        this->addNeighbours(neighbourhood, this->getTetrahedronFaceNeighbours(element));
+                        break;
+                    case TETRA_20:
+                        this->addNeighbours(neighbourhood, this->getTetrahedronFaceNeighbours(element));
+                        break;
+
                     case HEXA_8:
                         this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
                         break;
+                    case HEXA_20:
+                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
+                        break;
+                    case HEXA_27:
+                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
+                        break;
+                    case HEXA_32:
+                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
+                        break;
+                    case HEXA_56:
+                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
+                        break;
+                    case HEXA_64:
+                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
+                        break;
+
                     case PENTA_6:
                         this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
                         break;
+                    case PENTA_15:
+                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
+                        break;
+                    case PENTA_18:
+                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
+                        break;
+                    case PENTA_24:
+                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
+                        break;
+                    case PENTA_38:
+                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
+                        break;
+                    case PENTA_40:
+                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
+                        break;
+
                     case PYRA_5:
                         this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
                         break;
+                    case PYRA_14:
+                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
+                        break;
+                    case PYRA_13:
+                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
+                        break;
+                    case PYRA_21:
+                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
+                        break;
+                    case PYRA_29:
+                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
+                        break;
+                    case PYRA_30:
+                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
+                        break;
+
                     case TRI_3:
                         this->addNeighbours(neighbourhood, this->getTriangleFaceNeighbours(element));
                         break;
+                    case TRI_6:
+                        this->addNeighbours(neighbourhood, this->getTriangleFaceNeighbours(element));
+                        break;
+                    case TRI_9:
+                        this->addNeighbours(neighbourhood, this->getTriangleFaceNeighbours(element));
+                        break;
+                    case TRI_10:
+                        this->addNeighbours(neighbourhood, this->getTriangleFaceNeighbours(element));
+                        break;
+
                     case QUAD_4:
                         this->addNeighbours(neighbourhood, this->getQuadrangleFaceNeighbours(element));
                         break;
+                    case QUAD_8:
+                        this->addNeighbours(neighbourhood, this->getQuadrangleFaceNeighbours(element));
+                        break;
+                    case QUAD_9:
+                        this->addNeighbours(neighbourhood, this->getQuadrangleFaceNeighbours(element));
+                        break;
+                    case QUAD_12:
+                        this->addNeighbours(neighbourhood, this->getQuadrangleFaceNeighbours(element));
+                        break;
+                    case QUAD_16:
+                        this->addNeighbours(neighbourhood, this->getQuadrangleFaceNeighbours(element));
+                        break;
+
                     default:
                         throw std::runtime_error(std::string(__PRETTY_FUNCTION__) + " - Element type " + std::to_string(element->front()) + " not supported number");
                 }
