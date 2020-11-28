@@ -34,3 +34,11 @@ void DomainPartitioner::buildMetisVectors(GridDataPtr gridData) {
         }
     }
 }
+
+std::vector<int> DomainPartitioner::getXadj() {
+    return this->xadj;
+}
+
+std::vector<int> DomainPartitioner::getAdjncy() {
+    return this->adjncy;
+}

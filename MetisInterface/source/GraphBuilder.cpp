@@ -8,103 +8,103 @@ std::vector<std::set<int>> GraphBuilder::buildGraph(GridDataPtr gridData) {
             for (auto element = gridData->connectivities.cbegin() + section.begin; element != gridData->connectivities.cbegin() + section.end; ++element) {
                 switch (element->front()) {
                     case TETRA_4:
-                        this->addNeighbours(neighbourhood, this->getTetrahedronFaceNeighbours(element));
+                        this->addNeighbours(neighbourhood, this->getFaceNeighboursTetr4(element));
                         break;
-                    case TETRA_10:
-                        this->addNeighbours(neighbourhood, this->getTetrahedronFaceNeighbours(element));
-                        break;
-                    case TETRA_16:
-                        this->addNeighbours(neighbourhood, this->getTetrahedronFaceNeighbours(element));
-                        break;
-                    case TETRA_20:
-                        this->addNeighbours(neighbourhood, this->getTetrahedronFaceNeighbours(element));
-                        break;
+                    // case TETRA_10:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursTetr4(element));
+                    //     break;
+                    // case TETRA_16:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursTetr4(element));
+                    //     break;
+                    // case TETRA_20:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursTetr4(element));
+                    //     break;
 
                     case HEXA_8:
-                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
+                        this->addNeighbours(neighbourhood, this->getFaceNeighboursHexa8(element));
                         break;
-                    case HEXA_20:
-                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
-                        break;
-                    case HEXA_27:
-                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
-                        break;
-                    case HEXA_32:
-                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
-                        break;
-                    case HEXA_56:
-                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
-                        break;
-                    case HEXA_64:
-                        this->addNeighbours(neighbourhood, this->getHexahedronFaceNeighbours(element));
-                        break;
+                    // case HEXA_20:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursHexa8(element));
+                    //     break;
+                    // case HEXA_27:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursHexa8(element));
+                    //     break;
+                    // case HEXA_32:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursHexa8(element));
+                    //     break;
+                    // case HEXA_56:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursHexa8(element));
+                    //     break;
+                    // case HEXA_64:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursHexa8(element));
+                    //     break;
 
                     case PENTA_6:
-                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
+                        this->addNeighbours(neighbourhood, this->getFaceNeighboursPenta6(element));
                         break;
-                    case PENTA_15:
-                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
-                        break;
-                    case PENTA_18:
-                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
-                        break;
-                    case PENTA_24:
-                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
-                        break;
-                    case PENTA_38:
-                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
-                        break;
-                    case PENTA_40:
-                        this->addNeighbours(neighbourhood, this->getPrismFaceNeighbours(element));
-                        break;
+                    // case PENTA_15:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursPenta6(element));
+                    //     break;
+                    // case PENTA_18:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursPenta6(element));
+                    //     break;
+                    // case PENTA_24:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursPenta6(element));
+                    //     break;
+                    // case PENTA_38:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursPenta6(element));
+                    //     break;
+                    // case PENTA_40:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursPenta6(element));
+                    //     break;
 
                     case PYRA_5:
-                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
+                        this->addNeighbours(neighbourhood, this->getFaceNeighboursPyra5(element));
                         break;
-                    case PYRA_14:
-                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
-                        break;
-                    case PYRA_13:
-                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
-                        break;
-                    case PYRA_21:
-                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
-                        break;
-                    case PYRA_29:
-                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
-                        break;
-                    case PYRA_30:
-                        this->addNeighbours(neighbourhood, this->getPyramidFaceNeighbours(element));
-                        break;
+                    // case PYRA_14:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursPyra5(element));
+                    //     break;
+                    // case PYRA_13:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursPyra5(element));
+                    //     break;
+                    // case PYRA_21:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursPyra5(element));
+                    //     break;
+                    // case PYRA_29:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursPyra5(element));
+                    //     break;
+                    // case PYRA_30:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursPyra5(element));
+                    //     break;
 
                     case TRI_3:
-                        this->addNeighbours(neighbourhood, this->getTriangleFaceNeighbours(element));
+                        this->addNeighbours(neighbourhood, this->getFaceNeighboursTri3(element));
                         break;
                     case TRI_6:
-                        this->addNeighbours(neighbourhood, this->getTriangleFaceNeighbours(element));
+                        this->addNeighbours(neighbourhood, this->getFaceNeighboursTri6(element));
                         break;
-                    case TRI_9:
-                        this->addNeighbours(neighbourhood, this->getTriangleFaceNeighbours(element));
-                        break;
-                    case TRI_10:
-                        this->addNeighbours(neighbourhood, this->getTriangleFaceNeighbours(element));
-                        break;
+                    // case TRI_9:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursTri3(element));
+                    //     break;
+                    // case TRI_10:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursTri3(element));
+                    //     break;
 
                     case QUAD_4:
-                        this->addNeighbours(neighbourhood, this->getQuadrangleFaceNeighbours(element));
+                        this->addNeighbours(neighbourhood, this->getFaceNeighboursQuad4(element));
                         break;
-                    case QUAD_8:
-                        this->addNeighbours(neighbourhood, this->getQuadrangleFaceNeighbours(element));
-                        break;
-                    case QUAD_9:
-                        this->addNeighbours(neighbourhood, this->getQuadrangleFaceNeighbours(element));
-                        break;
-                    case QUAD_12:
-                        this->addNeighbours(neighbourhood, this->getQuadrangleFaceNeighbours(element));
-                        break;
-                    case QUAD_16:
-                        this->addNeighbours(neighbourhood, this->getQuadrangleFaceNeighbours(element));
-                        break;
+                    // case QUAD_8:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursQuad4(element));
+                    //     break;
+                    // case QUAD_9:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursQuad4(element));
+                    //     break;
+                    // case QUAD_12:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursQuad4(element));
+                    //     break;
+                    // case QUAD_16:
+                    //     this->addNeighbours(neighbourhood, this->getFaceNeighboursQuad4(element));
+                    //     break;
 
                     default:
                         throw std::runtime_error(std::string(__PRETTY_FUNCTION__) + " - Element type " + std::to_string(element->front()) + " not supported number");
@@ -115,7 +115,7 @@ std::vector<std::set<int>> GraphBuilder::buildGraph(GridDataPtr gridData) {
     return neighbourhood;
 }
 
-std::vector<std::pair<int, int>> GraphBuilder::getTetrahedronFaceNeighbours(std::vector<std::vector<int>>::const_iterator tetrahedron) {
+std::vector<std::pair<int, int>> GraphBuilder::getFaceNeighboursTetr4(std::vector<std::vector<int>>::const_iterator tetrahedron) {
     return std::vector<std::pair<int, int>>{
         std::make_pair((*tetrahedron)[1], (*tetrahedron)[2]),
         std::make_pair((*tetrahedron)[2], (*tetrahedron)[3]),
@@ -126,7 +126,7 @@ std::vector<std::pair<int, int>> GraphBuilder::getTetrahedronFaceNeighbours(std:
     };
 }
 
-std::vector<std::pair<int, int>> GraphBuilder::getHexahedronFaceNeighbours(std::vector<std::vector<int>>::const_iterator hexahedron) {
+std::vector<std::pair<int, int>> GraphBuilder::getFaceNeighboursHexa8(std::vector<std::vector<int>>::const_iterator hexahedron) {
     return std::vector<std::pair<int, int>>{
         std::make_pair((*hexahedron)[1], (*hexahedron)[2]),
         std::make_pair((*hexahedron)[2], (*hexahedron)[3]),
@@ -143,7 +143,7 @@ std::vector<std::pair<int, int>> GraphBuilder::getHexahedronFaceNeighbours(std::
     };
 }
 
-std::vector<std::pair<int, int>> GraphBuilder::getPrismFaceNeighbours(std::vector<std::vector<int>>::const_iterator prism) {
+std::vector<std::pair<int, int>> GraphBuilder::getFaceNeighboursPenta6(std::vector<std::vector<int>>::const_iterator prism) {
     return std::vector<std::pair<int, int>>{
         std::make_pair((*prism)[1], (*prism)[2]),
         std::make_pair((*prism)[2], (*prism)[3]),
@@ -157,7 +157,7 @@ std::vector<std::pair<int, int>> GraphBuilder::getPrismFaceNeighbours(std::vecto
     };
 }
 
-std::vector<std::pair<int, int>> GraphBuilder::getPyramidFaceNeighbours(std::vector<std::vector<int>>::const_iterator pyramid) {
+std::vector<std::pair<int, int>> GraphBuilder::getFaceNeighboursPyra5(std::vector<std::vector<int>>::const_iterator pyramid) {
     return std::vector<std::pair<int, int>>{
         std::make_pair((*pyramid)[1], (*pyramid)[2]),
         std::make_pair((*pyramid)[2], (*pyramid)[3]),
@@ -170,7 +170,7 @@ std::vector<std::pair<int, int>> GraphBuilder::getPyramidFaceNeighbours(std::vec
     };
 }
 
-std::vector<std::pair<int, int>> GraphBuilder::getTriangleFaceNeighbours(std::vector<std::vector<int>>::const_iterator triangle) {
+std::vector<std::pair<int, int>> GraphBuilder::getFaceNeighboursTri3(std::vector<std::vector<int>>::const_iterator triangle) {
     return std::vector<std::pair<int, int>>{
         std::make_pair((*triangle)[1], (*triangle)[2]),
         std::make_pair((*triangle)[2], (*triangle)[3]),
@@ -178,7 +178,18 @@ std::vector<std::pair<int, int>> GraphBuilder::getTriangleFaceNeighbours(std::ve
     };
 }
 
-std::vector<std::pair<int, int>> GraphBuilder::getQuadrangleFaceNeighbours(std::vector<std::vector<int>>::const_iterator quadrangle) {
+std::vector<std::pair<int, int>> GraphBuilder::getFaceNeighboursTri6(std::vector<std::vector<int>>::const_iterator triangle) {
+    return std::vector<std::pair<int, int>>{
+        std::make_pair((*triangle)[1], (*triangle)[4]),
+        std::make_pair((*triangle)[4], (*triangle)[2]),
+        std::make_pair((*triangle)[2], (*triangle)[5]),
+        std::make_pair((*triangle)[5], (*triangle)[3]),
+        std::make_pair((*triangle)[3], (*triangle)[6]),
+        std::make_pair((*triangle)[6], (*triangle)[1])
+    };
+}
+
+std::vector<std::pair<int, int>> GraphBuilder::getFaceNeighboursQuad4(std::vector<std::vector<int>>::const_iterator quadrangle) {
     return std::vector<std::pair<int, int>>{
         std::make_pair((*quadrangle)[1], (*quadrangle)[2]),
         std::make_pair((*quadrangle)[2], (*quadrangle)[3]),
