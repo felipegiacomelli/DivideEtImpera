@@ -2,6 +2,7 @@
 #define __METIS_INTERFACE_GRAPH_BUILDER_HPP__
 
 #include <set>
+#include <stdexcept>
 #include <MSHtoCGNS/GridData/GridData.hpp>
 
 class GraphBuilder {
